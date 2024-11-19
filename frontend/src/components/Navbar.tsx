@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import logo from "../assets/logo.png"
 import { RiCloseLine, RiMenu3Line } from '@remixicon/react';
 import { LINKS } from '../constants';
