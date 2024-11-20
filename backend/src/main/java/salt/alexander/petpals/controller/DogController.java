@@ -16,6 +16,6 @@ public class DogController {
 
     @GetMapping
     public List<Dog> getAllDogs() {
-        return dogService.getAllDogs(); // Return all dogs
+        return dogService.getAllDogs();
     }
 }
