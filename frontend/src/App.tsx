@@ -24,11 +24,6 @@ const App = () => {
           <UserButton />
         </SignedIn>
       </header>
-      <main className="overflow-x-hidden antialiased text-neutral-800">
-        <Navbar />
-        <Hero />
-        <Services />
-      </main>
     </RouterProvider>
   );
 };

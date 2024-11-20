@@ -12,6 +12,7 @@
 
 import { Route as rootRoute } from './routes/__root'
 import { Route as ProfileImport } from './routes/profile'
+import { Route as DogAdoptionImport } from './routes/dog-adoption'
 import { Route as IndexImport } from './routes/index'
 
 // Create/Update Routes
@@ -19,6 +20,12 @@ import { Route as IndexImport } from './routes/index'
 const ProfileRoute = ProfileImport.update({
   id: '/profile',
   path: '/profile',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const DogAdoptionRoute = DogAdoptionImport.update({
+  id: '/dog-adoption',
+  path: '/dog-adoption',
   getParentRoute: () => rootRoute,
 } as any)
 
@@ -39,6 +46,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexImport
       parentRoute: typeof rootRoute
     }
+    '/dog-adoption': {
+      id: '/dog-adoption'
+      path: '/dog-adoption'
+      fullPath: '/dog-adoption'
+      preLoaderRoute: typeof DogAdoptionImport
+      parentRoute: typeof rootRoute
+    }
     '/profile': {
       id: '/profile'
       path: '/profile'
@@ -53,36 +67,41 @@ declare module '@tanstack/react-router' {
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/dog-adoption': typeof DogAdoptionRoute
   '/profile': typeof ProfileRoute
 }
 
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/dog-adoption': typeof DogAdoptionRoute
   '/profile': typeof ProfileRoute
 }
 
 export interface FileRoutesById {
   __root__: typeof rootRoute
   '/': typeof IndexRoute
+  '/dog-adoption': typeof DogAdoptionRoute
   '/profile': typeof ProfileRoute
 }
 
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/profile'
+  fullPaths: '/' | '/dog-adoption' | '/profile'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/profile'
-  id: '__root__' | '/' | '/profile'
+  to: '/' | '/dog-adoption' | '/profile'
+  id: '__root__' | '/' | '/dog-adoption' | '/profile'
   fileRoutesById: FileRoutesById
 }
 
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  DogAdoptionRoute: typeof DogAdoptionRoute
   ProfileRoute: typeof ProfileRoute
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  DogAdoptionRoute: DogAdoptionRoute,
   ProfileRoute: ProfileRoute,
 }
 
@@ -97,11 +116,15 @@ export const routeTree = rootRoute
       "filePath": "__root.tsx",
       "children": [
         "/",
+        "/dog-adoption",
         "/profile"
       ]
     },
     "/": {
       "filePath": "index.tsx"
+    },
+    "/dog-adoption": {
+      "filePath": "dog-adoption.tsx"
     },
     "/profile": {
       "filePath": "profile.tsx"
