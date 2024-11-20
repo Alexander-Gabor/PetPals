@@ -1,4 +1,3 @@
-// Cat.java
 package salt.alexander.petpals.model;
 
 import jakarta.persistence.Entity;
