@@ -11,10 +11,6 @@ export const LINKS = [
     link: "#services",
   },
   {
-    name: "Portfolio",
-    link: "#portfolio",
-  },
-  {
     name: "About",
     link: "#about",
   },

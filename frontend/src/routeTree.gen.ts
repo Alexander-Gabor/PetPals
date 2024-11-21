@@ -12,7 +12,10 @@
 
 import { Route as rootRoute } from './routes/__root'
 import { Route as ProfileImport } from './routes/profile'
+import { Route as PetFosterPageImport } from './routes/pet-foster-page'
 import { Route as DogAdoptionImport } from './routes/dog-adoption'
+import { Route as CatAdoptionImport } from './routes/cat-adoption'
+import { Route as AboutImport } from './routes/about'
 import { Route as IndexImport } from './routes/index'
 
 // Create/Update Routes
@@ -23,9 +26,27 @@ const ProfileRoute = ProfileImport.update({
   getParentRoute: () => rootRoute,
 } as any)
 
+const PetFosterPageRoute = PetFosterPageImport.update({
+  id: '/pet-foster-page',
+  path: '/pet-foster-page',
+  getParentRoute: () => rootRoute,
+} as any)
+
 const DogAdoptionRoute = DogAdoptionImport.update({
   id: '/dog-adoption',
   path: '/dog-adoption',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const CatAdoptionRoute = CatAdoptionImport.update({
+  id: '/cat-adoption',
+  path: '/cat-adoption',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const AboutRoute = AboutImport.update({
+  id: '/about',
+  path: '/about',
   getParentRoute: () => rootRoute,
 } as any)
 
@@ -46,11 +67,32 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexImport
       parentRoute: typeof rootRoute
     }
+    '/about': {
+      id: '/about'
+      path: '/about'
+      fullPath: '/about'
+      preLoaderRoute: typeof AboutImport
+      parentRoute: typeof rootRoute
+    }
+    '/cat-adoption': {
+      id: '/cat-adoption'
+      path: '/cat-adoption'
+      fullPath: '/cat-adoption'
+      preLoaderRoute: typeof CatAdoptionImport
+      parentRoute: typeof rootRoute
+    }
     '/dog-adoption': {
       id: '/dog-adoption'
       path: '/dog-adoption'
       fullPath: '/dog-adoption'
       preLoaderRoute: typeof DogAdoptionImport
+      parentRoute: typeof rootRoute
+    }
+    '/pet-foster-page': {
+      id: '/pet-foster-page'
+      path: '/pet-foster-page'
+      fullPath: '/pet-foster-page'
+      preLoaderRoute: typeof PetFosterPageImport
       parentRoute: typeof rootRoute
     }
     '/profile': {
@@ -67,41 +109,75 @@ declare module '@tanstack/react-router' {
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/about': typeof AboutRoute
+  '/cat-adoption': typeof CatAdoptionRoute
   '/dog-adoption': typeof DogAdoptionRoute
+  '/pet-foster-page': typeof PetFosterPageRoute
   '/profile': typeof ProfileRoute
 }
 
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/about': typeof AboutRoute
+  '/cat-adoption': typeof CatAdoptionRoute
   '/dog-adoption': typeof DogAdoptionRoute
+  '/pet-foster-page': typeof PetFosterPageRoute
   '/profile': typeof ProfileRoute
 }
 
 export interface FileRoutesById {
   __root__: typeof rootRoute
   '/': typeof IndexRoute
+  '/about': typeof AboutRoute
+  '/cat-adoption': typeof CatAdoptionRoute
   '/dog-adoption': typeof DogAdoptionRoute
+  '/pet-foster-page': typeof PetFosterPageRoute
   '/profile': typeof ProfileRoute
 }
 
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/dog-adoption' | '/profile'
+  fullPaths:
+    | '/'
+    | '/about'
+    | '/cat-adoption'
+    | '/dog-adoption'
+    | '/pet-foster-page'
+    | '/profile'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/dog-adoption' | '/profile'
-  id: '__root__' | '/' | '/dog-adoption' | '/profile'
+  to:
+    | '/'
+    | '/about'
+    | '/cat-adoption'
+    | '/dog-adoption'
+    | '/pet-foster-page'
+    | '/profile'
+  id:
+    | '__root__'
+    | '/'
+    | '/about'
+    | '/cat-adoption'
+    | '/dog-adoption'
+    | '/pet-foster-page'
+    | '/profile'
   fileRoutesById: FileRoutesById
 }
 
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AboutRoute: typeof AboutRoute
+  CatAdoptionRoute: typeof CatAdoptionRoute
   DogAdoptionRoute: typeof DogAdoptionRoute
+  PetFosterPageRoute: typeof PetFosterPageRoute
   ProfileRoute: typeof ProfileRoute
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AboutRoute: AboutRoute,
+  CatAdoptionRoute: CatAdoptionRoute,
   DogAdoptionRoute: DogAdoptionRoute,
+  PetFosterPageRoute: PetFosterPageRoute,
   ProfileRoute: ProfileRoute,
 }
 
@@ -116,15 +192,27 @@ export const routeTree = rootRoute
       "filePath": "__root.tsx",
       "children": [
         "/",
+        "/about",
+        "/cat-adoption",
         "/dog-adoption",
+        "/pet-foster-page",
         "/profile"
       ]
     },
     "/": {
       "filePath": "index.tsx"
     },
+    "/about": {
+      "filePath": "about.tsx"
+    },
+    "/cat-adoption": {
+      "filePath": "cat-adoption.tsx"
+    },
     "/dog-adoption": {
       "filePath": "dog-adoption.tsx"
+    },
+    "/pet-foster-page": {
+      "filePath": "pet-foster-page.tsx"
     },
     "/profile": {
       "filePath": "profile.tsx"

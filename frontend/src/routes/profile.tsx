@@ -1,9 +1,16 @@
-import { createFileRoute } from '@tanstack/react-router'
+import { createFileRoute } from "@tanstack/react-router";
+import ProfilePage from "../pages/ProfilePage";
+import Navbar from "../components/Navbar";
 
-export const Route = createFileRoute('/profile')({
-  component: RouteComponent,
-})
+export const Route = createFileRoute("/profile")({
+  component: Profile,
+});
 
-function RouteComponent() {
-  return 'Hello /profile!'
+function Profile() {
+  return (
+    <>
+      <Navbar />
+      <ProfilePage />
+    </>
+  );
 }
