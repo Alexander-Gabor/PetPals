@@ -1,5 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import DogAdoptionPage from "../pages/DogAdoptionPage";
+import Navbar from "../components/Navbar";
+import Contact from "../components/Contact";
 
 export const Route = createFileRoute("/dog-adoption")({
   component: DogAdoption,
@@ -8,7 +10,11 @@ export const Route = createFileRoute("/dog-adoption")({
 function DogAdoption() {
   return (
     <>
+      <Navbar />
+      <main className="flex-grow">
       <DogAdoptionPage />
+      </main>
+      <Contact />
     </>
   );
 }

@@ -1,9 +1,10 @@
 import { useUser } from "@clerk/clerk-react";
 import { useBooking } from "../context/BookingContext";
+import { FaHeart } from "react-icons/fa"; // Heart icon
 
 const ProfilePage = () => {
   const { user } = useUser();
-  const { bookings } = useBooking(); // Use `useBooking` to access `bookings`
+  const { bookings } = useBooking(); 
 
   if (!user) {
     return <p>Please sign in to view your profile.</p>;
@@ -18,9 +19,19 @@ const ProfilePage = () => {
       {bookings.length > 0 ? (
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           {bookings.map((booking) => (
-            <div key={booking.id} className="border p-4 rounded">
-              <h3 className="font-bold text-lg">{booking.petName}</h3>
-              <p className="italic">{booking.date}</p>
+            <div
+              key={booking.id}
+              className="flex items-center border p-4 rounded shadow-md"
+            >
+              <div className="flex items-center mr-3">
+                <FaHeart className="text-red-500" size={24} />
+              </div>
+
+              {/* Booking Details */}
+              <div>
+                <h3 className="font-bold text-lg">{booking.petName}</h3>
+                <p className="italic">{booking.date}</p>
+              </div>
             </div>
           ))}
         </div>

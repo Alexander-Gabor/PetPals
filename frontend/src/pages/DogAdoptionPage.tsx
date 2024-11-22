@@ -6,6 +6,7 @@ const DogAdoptionPage = () => {
   const [form, setForm] = useState({ name: "", email: "", dogId: null });
   const [recommendedType, setRecommendedType] = useState("");
   const [recommendedBreeds, setRecommendedBreeds] = useState<string[]>([]);
+  const [expandedDogId, setExpandedDogId] = useState<number | null>(null);
 
   const path = "http://localhost:8080/";
   const {
@@ -35,15 +36,26 @@ const DogAdoptionPage = () => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    alert(`Interest Registered for Dog ID: ${form.dogId}`);
+    alert(`Interest Registered for ${form.name}`);
   };
 
-  const filteredDogs = recommendedBreeds.length
-    ? dogs.filter((dog: any) => recommendedBreeds.includes(dog.breed))
-    : dogs;
+  const filteredDogs = dogs.filter((dog: any) => {
+    if (recommendedBreeds.length === 0) return true; // No filters, return all dogs
+    return recommendedBreeds.includes(dog.breed); // Filter by recommended breeds
+  });
 
   if (isLoading) return <p>Loading dogs...</p>;
   if (error) return <p>Error loading dogs: {(error as Error).message}</p>;
+
+  const handleCardClick = (dogId: number, event: React.MouseEvent) => {
+    // Prevent the card from collapsing if the form is clicked
+    if (event.target instanceof HTMLFormElement) {
+      return;
+    }
+
+    // If the clicked card is already expanded, collapse it; else expand it
+    setExpandedDogId(expandedDogId === dogId ? null : dogId);
+  };
 
   return (
     <section className="max-w-7xl mx-auto my-20">
@@ -70,7 +82,11 @@ const DogAdoptionPage = () => {
       {/* Dogs Grid */}
       <div className="grid gap-8 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
         {filteredDogs.map((dog: any) => (
-          <div key={dog.id} className="p-4 border rounded-lg">
+          <div
+            key={dog.id}
+            className="relative p-4 border rounded-lg transition-transform transform hover:scale-105 cursor-pointer"
+            onClick={(e) => handleCardClick(dog.id, e)} // Handle card expansion
+          >
             <img
               src={`http://localhost:8080${dog.image}`}
               alt={dog.name}
@@ -79,45 +95,45 @@ const DogAdoptionPage = () => {
             <h3 className="text-xl font-medium">{dog.name}</h3>
             <p className="mt-2">{dog.description}</p>
             <p className="italic text-sm mt-1">Breed: {dog.breed}</p>
+
+            {/* Dog card expansion (Overlay) */}
+            {expandedDogId === dog.id && (
+              <div className="absolute inset-0 bg-white bg-opacity-90 p-6 rounded-lg z-10">
+                <h4 className="text-lg font-semibold mb-2">
+                  Register Your Interest for {dog.name}
+                </h4>
+                <form
+                  onSubmit={handleSubmit}
+                  className="space-y-4"
+                  // Prevent card collapse when form fields are clicked
+                  onClick={(e) => e.stopPropagation()}
+                >
+                  <input
+                    type="text"
+                    placeholder="Name"
+                    className="block w-full mb-4 p-2 border"
+                    onChange={(e) => setForm({ ...form, name: e.target.value })}
+                  />
+                  <input
+                    type="email"
+                    placeholder="Email"
+                    className="block w-full mb-4 p-2 border"
+                    onChange={(e) =>
+                      setForm({ ...form, email: e.target.value })
+                    }
+                  />
+                  <button
+                    type="submit"
+                    className="px-4 py-2 bg-blue-600 text-white rounded mt-4"
+                  >
+                    Submit
+                  </button>
+                </form>
+              </div>
+            )}
           </div>
         ))}
       </div>
-
-      {/* Interest Form */}
-      <form onSubmit={handleSubmit} className="mt-12 p-4 border rounded-lg">
-        <h3 className="text-2xl font-medium mb-4">Register Your Interest</h3>
-        <input
-          type="text"
-          placeholder="Name"
-          className="block w-full mb-4 p-2 border"
-          onChange={(e) => setForm({ ...form, name: e.target.value })}
-        />
-        <input
-          type="email"
-          placeholder="Email"
-          className="block w-full mb-4 p-2 border"
-          onChange={(e) => setForm({ ...form, email: e.target.value })}
-        />
-        <select
-          className="block w-full mb-4 p-2 border"
-          onChange={(e) => setForm({ ...form, dogId: e.target.value })}
-        >
-          <option value="">Select a Dog</option>
-          {filteredDogs.map((dog: any) => (
-            <option key={dog.id} value={dog.id}>
-              {dog.name}
-            </option>
-          ))}
-        </select>
-        <div className="flex justify-center mt-4">
-          <button
-            type="submit"
-            className="px-4 py-2 bg-blue-600 text-white rounded"
-          >
-            Submit
-          </button>
-        </div>
-      </form>
     </section>
   );
 };

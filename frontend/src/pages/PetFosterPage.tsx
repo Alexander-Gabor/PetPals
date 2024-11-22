@@ -25,25 +25,20 @@ const mockPets = [
 ];
 
 const PetFosterPage = () => {
-  const { addBooking } = useBooking(); // Access the addBooking function
-  const [selectedDate, setSelectedDate] = useState<unknown>(null); // Calendar date as an object
-  const [availablePets, setAvailablePets] = useState<unknown[]>([]); // Filtered pets based on selected date
-  const [selectedPet, setSelectedPet] = useState<unknown>(null); // Selected pet
+  const { addBooking } = useBooking();
+  const [selectedDate, setSelectedDate] = useState<unknown>(null);
+  const [availablePets, setAvailablePets] = useState<unknown[]>([]);
+  const [selectedPet, setSelectedPet] = useState<unknown>(null);
 
-  // Convert the selected date object to the string format "yyyy-MM-dd"
   const formatDate = (date: any) => {
     if (!date) return null;
     return `${date.year}-${String(date.month).padStart(2, "0")}-${String(date.day).padStart(2, "0")}`;
   };
 
-  // Handle date click on the calendar
   const handleDateSelection = (date: any) => {
     setSelectedDate(date);
-
-    // Format the selected date as "yyyy-MM-dd" to check available pets
     const formattedDate = formatDate(date);
 
-    // Filter pets available on this date
     const filteredPets = mockPets.filter((pet) =>
       pet.availableDates.includes(formattedDate)
     );
@@ -60,7 +55,6 @@ const PetFosterPage = () => {
 
     const formattedDate = formatDate(selectedDate);
 
-    // Add the selected pet booking to global state
     addBooking({
       id: Date.now(), // Generate a unique ID for the booking
       petName: selectedPet.name,
@@ -92,7 +86,7 @@ const PetFosterPage = () => {
             customDaysClassName={mockPets.flatMap((pet) =>
               pet.availableDates.map((date) => ({
                 date: new Date(date),
-                className: "bg-green-300 text-black rounded", // Tailwind-style classes
+                className: "bg-green-300 text-black rounded",
               }))
             )}
           />

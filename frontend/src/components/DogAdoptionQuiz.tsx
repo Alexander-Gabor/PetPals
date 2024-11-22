@@ -7,17 +7,17 @@ const DogAdoptionQuiz = ({ onQuizComplete }: { onQuizComplete: (type: string, br
   const questions = [
     {
       question: "What size of dog do you prefer?",
-      options: ["Small", "Medium", "Large"],
+      options: ["Small", "Medium", "Large", "I don't care"],
       key: "size",
     },
     {
       question: "What energy level matches your lifestyle?",
-      options: ["Low", "Moderate", "High"],
+      options: ["Low", "Moderate", "High", "I don't care"],
       key: "energy",
     },
     {
       question: "Do you prefer a puppy, adult, or senior dog?",
-      options: ["Puppy", "Adult", "Senior"],
+      options: ["Puppy", "Adult", "Senior", "I don't care"],
       key: "age",
     },
   ];
@@ -42,7 +42,6 @@ const DogAdoptionQuiz = ({ onQuizComplete }: { onQuizComplete: (type: string, br
     if (step < questions.length - 1) {
       setStep((prev) => prev + 1);
     } else {
-      // All questions answered
       const { type, breeds } = generateRecommendation(answers);
       onQuizComplete(type, breeds);
     }
@@ -70,6 +69,14 @@ const DogAdoptionQuiz = ({ onQuizComplete }: { onQuizComplete: (type: string, br
               </button>
             ))}
           </div>
+          {step > 0 && (
+            <button
+              onClick={() => setStep((prev) => prev - 1)}
+              className="mt-4 px-4 py-2 bg-gray-700 text-white rounded hover:bg-gray-800"
+            >
+              Back
+            </button>
+          )}
         </div>
       ) : (
         <div>

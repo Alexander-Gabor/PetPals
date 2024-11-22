@@ -1,5 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import CatAdoptionPage from "../pages/CatAdoptionPage";
+import Navbar from "../components/Navbar";
 
 export const Route = createFileRoute("/cat-adoption")({
   component: CatAdoption,
@@ -8,6 +9,7 @@ export const Route = createFileRoute("/cat-adoption")({
 function CatAdoption() {
   return (
     <>
+      <Navbar />
       <CatAdoptionPage />
     </>
   );

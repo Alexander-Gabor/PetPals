@@ -26,7 +26,7 @@ export const LINKS = [
 
 export const HERO_CONTENT = {
   title: "PetPals",
-  subtitle: "Get yourself a floofy floof",
+  subtitle: "Get yourself a floofy floof  🐾",
   image: hero,
 };
 
